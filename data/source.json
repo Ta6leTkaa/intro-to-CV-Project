@@ -1,0 +1,10 @@
+{
+  "dataset": "Ultralytics Construction-PPE",
+  "archive_url": "https://github.com/ultralytics/assets/releases/download/v0.0.0/construction-ppe.zip",
+  "archive_sha256": "bef8dcb599aa4e9d9f5e602cb6fa7143d3c84d7f6a0ff40463d7f2a4c2632ccc",
+  "archive_bytes": 178415813,
+  "config_url": "https://raw.githubusercontent.com/ultralytics/ultralytics/main/ultralytics/cfg/datasets/construction-ppe.yaml",
+  "config_sha256": "8926b6ec2c28c2fd6fc9c54afe8de12bc517c0713c11d35323a36f0d50729dc9",
+  "license_declared_by_publisher": "AGPL-3.0",
+  "documentation": "https://docs.ultralytics.com/datasets/detect/construction-ppe"
+}

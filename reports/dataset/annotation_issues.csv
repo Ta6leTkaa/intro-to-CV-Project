@@ -1,0 +1,12 @@
+image,line,problem
+labels/train/image940(1).txt,,orphan_label
+labels/train/image941(1).txt,,orphan_label
+labels/train/image944(1).txt,,orphan_label
+labels/train/image945(1).txt,,orphan_label
+labels/train/image946(1).txt,,orphan_label
+labels/train/image947(1).txt,,orphan_label
+labels/train/image948(1).txt,,orphan_label
+labels/train/image949(1).txt,,orphan_label
+labels/train/image95(1).txt,,orphan_label
+labels/train/image950(1).txt,,orphan_label
+images/train/image187.jpg,6,duplicate box annotation

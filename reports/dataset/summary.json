@@ -1,0 +1,31 @@
+{
+  "source_images": {
+    "train": 1132,
+    "val": 143,
+    "test": 141
+  },
+  "prepared_images": {
+    "train": 1265,
+    "test": 78,
+    "val": 73
+  },
+  "total_images": 1416,
+  "total_boxes": 11520,
+  "empty_labels": 0,
+  "source_annotation_issues": 11,
+  "blocking_annotation_issues": 0,
+  "ignored_orphan_labels": 10,
+  "removed_duplicate_boxes": 1,
+  "classes_visually_reviewed": 11,
+  "exact_duplicate_groups": 0,
+  "cross_split_candidates": 91,
+  "unreviewed_candidates": 0,
+  "moved_images": 149,
+  "manual_scene_groups": 14,
+  "group_count": 724,
+  "remaining_known_cross_split_pairs": 0,
+  "train_max_min_class_ratio": 21.40909090909091,
+  "missing_train_classes": [],
+  "ready_for_training": true,
+  "occlusion_objects": 521
+}

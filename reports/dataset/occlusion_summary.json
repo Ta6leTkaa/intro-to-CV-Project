@@ -1,0 +1,45 @@
+{
+  "reviewer": "assistant",
+  "review_requested_by": "Andrei Dubinin",
+  "review_date": "2026-10-05",
+  "method": "Single visual review of all 521 source bounding boxes, using original-image contact sheets and per-object contextual crops; no model predictions used.",
+  "independent_member4_review_completed": false,
+  "objects": 521,
+  "final_tags": {
+    "uncertain": 190,
+    "clear": 259,
+    "occluded": 72
+  },
+  "truncated": {
+    "uncertain": 188,
+    "yes": 24,
+    "no": 309
+  },
+  "evaluation_rule": "Compare clear versus occluded only; exclude final_tag=uncertain. Report counts and truncation separately. These are assistant-assigned labels, not agreement between two human reviewers.",
+  "by_class": {
+    "boots": {
+      "uncertain": 103,
+      "clear": 37,
+      "occluded": 4
+    },
+    "gloves": {
+      "uncertain": 32,
+      "clear": 22,
+      "occluded": 3
+    },
+    "goggles": {
+      "clear": 7,
+      "uncertain": 2
+    },
+    "helmet": {
+      "clear": 116,
+      "uncertain": 38,
+      "occluded": 7
+    },
+    "vest": {
+      "clear": 77,
+      "occluded": 58,
+      "uncertain": 15
+    }
+  }
+}

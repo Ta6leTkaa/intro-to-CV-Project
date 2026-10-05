@@ -1,0 +1,12 @@
+class_id,class_name,status,reviewed_boxes,observed_box_meaning,limitations
+0,helmet,sample_reviewed,20,Helmet bounding box,Some helmets are small or partly hidden.
+1,gloves,sample_reviewed,20,Gloved hand,Some hand boxes are small and visually ambiguous.
+2,vest,sample_reviewed,20,Safety vest / torso wearing vest,Vests vary in colour; no dedicated no_vest label.
+3,boots,sample_reviewed,20,Boot / protective footwear,Boot labels include several styles of footwear.
+4,goggles,sample_reviewed,20,Eye region with goggles or glasses,Some examples appear to be ordinary or sun glasses; protective function cannot be inferred.
+5,none,sample_reviewed,20,Torso / ordinary clothing in reviewed samples,"Not image background; the name is ambiguous. Preserve none as supplied, do not silently rename it no_vest."
+6,Person,sample_reviewed,20,Person / worker bounding box,Some examples have overlapping boxes for the same apparent person (e.g. test/image1.jpeg).
+7,no_helmet,sample_reviewed,20,Head without helmet,"Covers the head, not an absent helmet object; many examples are outside construction sites."
+8,no_goggle,sample_reviewed,20,Eye/face region without protective goggles,Some examples have ordinary glasses; class boundaries are not a reliable PPE-safety certification.
+9,no_gloves,sample_reviewed,20,Bare hand / hand without gloves,Includes ordinary activities and non-construction photos.
+10,no_boots,sample_reviewed,20,Footwear / lower-body region without protective boots,Very rare class; some boxes extend beyond feet. Several examples are sports/casual photos.
