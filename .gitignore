@@ -6,3 +6,7 @@ data/prepared/
 data/downloads/
 reports/dataset/review_images/
 reports/dataset/occlusion_images/
+reports/training/smoke/
+Settings.json
+/yolo11n.pt
+last.pt
