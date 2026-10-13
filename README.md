@@ -1,6 +1,7 @@
 # PPE Safety Equipment Detection — P14
 
-Team plan: [planning/Intro_to_CV_project_report.pdf](planning/Intro_to_CV_project_report.pdf).
+Team plan: [planning/Intro_to_CV_project_plan.pdf](planning/Intro_to_CV_project_plan.pdf).
+First working model report: [planning/Intro_to_CV_project_first_working_model.pdf](planning/Intro_to_CV_project_first_working_model.pdf).
 Andrei's tasks (Member 1): [planning/member_1.md](planning/member_1.md).
 Evgeniy's tasks (Member 2): [planning/member_2.md](planning/member_2.md).
 Dataset preparation results: [reports/dataset/README.md](reports/dataset/README.md).
