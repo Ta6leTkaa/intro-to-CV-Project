@@ -1,0 +1,162 @@
+{
+  "seed": 44,
+  "train_seconds": 5326.1,
+  "epochs": 50,
+  "batch": 16,
+  "device": "mps",
+  "postprocess_backend": "cpu_nms_with_mps_transfers",
+  "training_loss_backend": "cpu_detection_criterion_with_mps_model",
+  "validation_backend": "mps_forward_cpu_nms_and_metrics",
+  "resume": null,
+  "resume_history": [],
+  "segment_train_seconds": 5326.1,
+  "run_dir": "reports/training/yolo11s_seed44",
+  "metrics": {
+    "mAP50-95": 0.2118,
+    "mAP50": 0.5225,
+    "precision": 0.5915,
+    "recall": 0.5153,
+    "per_class_ap50": {
+      "helmet": 0.7344,
+      "gloves": 0.5586,
+      "vest": 0.6305,
+      "boots": 0.5322,
+      "goggles": 0.389,
+      "none": 0.5585,
+      "Person": 0.8598,
+      "no_helmet": 0.3699,
+      "no_goggle": 0.3293,
+      "no_gloves": 0.3443,
+      "no_boots": 0.4414
+    },
+    "per_class": [
+      {
+        "Class": "helmet",
+        "Images": 41.0,
+        "Instances": 119.0,
+        "Box-P": 0.86092,
+        "Box-R": 0.71429,
+        "Box-F1": 0.78078,
+        "mAP50": 0.73436,
+        "mAP75": 0.30533,
+        "mAP50-95": 0.35157
+      },
+      {
+        "Class": "gloves",
+        "Images": 16.0,
+        "Instances": 37.0,
+        "Box-P": 0.68445,
+        "Box-R": 0.52784,
+        "Box-F1": 0.59603,
+        "mAP50": 0.55858,
+        "mAP75": 0.04,
+        "mAP50-95": 0.17441
+      },
+      {
+        "Class": "vest",
+        "Images": 42.0,
+        "Instances": 92.0,
+        "Box-P": 0.77145,
+        "Box-R": 0.62377,
+        "Box-F1": 0.68979,
+        "mAP50": 0.63047,
+        "mAP75": 0.34962,
+        "mAP50-95": 0.32945
+      },
+      {
+        "Class": "boots",
+        "Images": 14.0,
+        "Instances": 40.0,
+        "Box-P": 0.82938,
+        "Box-R": 0.48637,
+        "Box-F1": 0.61317,
+        "mAP50": 0.53223,
+        "mAP75": 0.08243,
+        "mAP50-95": 0.18606
+      },
+      {
+        "Class": "goggles",
+        "Images": 6.0,
+        "Instances": 8.0,
+        "Box-P": 0.29988,
+        "Box-R": 0.375,
+        "Box-F1": 0.33326,
+        "mAP50": 0.389,
+        "mAP75": 0.0,
+        "mAP50-95": 0.17922
+      },
+      {
+        "Class": "none",
+        "Images": 37.0,
+        "Instances": 69.0,
+        "Box-P": 0.58883,
+        "Box-R": 0.68116,
+        "Box-F1": 0.63164,
+        "mAP50": 0.5585,
+        "mAP75": 0.09346,
+        "mAP50-95": 0.17701
+      },
+      {
+        "Class": "Person",
+        "Images": 72.0,
+        "Instances": 162.0,
+        "Box-P": 0.81626,
+        "Box-R": 0.80864,
+        "Box-F1": 0.81243,
+        "mAP50": 0.85983,
+        "mAP75": 0.41922,
+        "mAP50-95": 0.43327
+      },
+      {
+        "Class": "no_helmet",
+        "Images": 27.0,
+        "Instances": 45.0,
+        "Box-P": 0.44723,
+        "Box-R": 0.4,
+        "Box-F1": 0.4223,
+        "mAP50": 0.36993,
+        "mAP75": 0.01158,
+        "mAP50-95": 0.10793
+      },
+      {
+        "Class": "no_goggle",
+        "Images": 25.0,
+        "Instances": 41.0,
+        "Box-P": 0.36741,
+        "Box-R": 0.21951,
+        "Box-F1": 0.27483,
+        "mAP50": 0.32928,
+        "mAP75": 0.03436,
+        "mAP50-95": 0.11559
+      },
+      {
+        "Class": "no_gloves",
+        "Images": 23.0,
+        "Instances": 56.0,
+        "Box-P": 0.52178,
+        "Box-R": 0.33134,
+        "Box-F1": 0.4053,
+        "mAP50": 0.34434,
+        "mAP75": 0.00971,
+        "mAP50-95": 0.10714
+      },
+      {
+        "Class": "no_boots",
+        "Images": 2.0,
+        "Instances": 4.0,
+        "Box-P": 0.3185,
+        "Box-R": 0.5,
+        "Box-F1": 0.38913,
+        "mAP50": 0.44143,
+        "mAP75": 0.00314,
+        "mAP50-95": 0.16855
+      }
+    ],
+    "speed_ms_per_image": {
+      "preprocess": 0.14,
+      "inference": 6.16,
+      "loss": 0.0,
+      "postprocess": 4.03
+    }
+  }
+}

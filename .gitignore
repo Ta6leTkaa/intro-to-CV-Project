@@ -7,6 +7,9 @@ data/downloads/
 reports/dataset/review_images/
 reports/dataset/occlusion_images/
 reports/training/smoke/
+reports/training/interrupted/
 Settings.json
 /yolo11n.pt
+/yolo11s.pt
+reports/evaluation/cache/
 last.pt

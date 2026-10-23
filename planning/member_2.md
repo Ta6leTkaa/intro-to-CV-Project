@@ -38,7 +38,7 @@ noisily - Members 3 and 4 should read them cautiously.
 ## Team handoff
 
 - Members 3 and 4: run the identical protocol for the comparison model with
-  `python scripts/train_yolo11n.py --model yolo11s.pt`; checkpoints and summaries land
+  `python scripts/train_yolo11s.py`; checkpoints and summaries land
   in `reports/training/yolo11s_seed{N}/` and `reports/training/yolo11s_summary.json`.
 - Checkpoints: `reports/training/yolo11n_seed{N}/weights/best.pt` (committed); per-run
   logs, curves, and confusion matrices are next to them; `last.pt` is not committed.
