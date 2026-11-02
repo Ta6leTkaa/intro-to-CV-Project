@@ -115,3 +115,25 @@ See [evaluation protocol](reports/evaluation/README.md) and [Member 3 handoff](p
 For final evaluation, freeze validation-selected settings before using test data. Size and
 occlusion analysis, at least three explained failure cases, and the final report/demo remain
 for the Results checkpoint and final submission.
+
+## Results checkpoint (Stage 5)
+
+The completed held-out evaluation and failure analysis are in
+[the Results checkpoint report](planning/Intro_to_CV_Results_Checkpoint.pdf), with
+[editable LaTeX](planning/latex/results_checkpoint.tex) and a
+[self-contained source archive](planning/results_checkpoint_latex.zip).
+The English report follows the previous submissions. It evaluates all six retained
+checkpoints on 78 test images without changing the Stage 4 thresholds (0.20/0.30), and
+includes per-class and size/visibility results, controlled CPU latency, training-time
+provenance, and three actual annotated failures.
+
+```sh
+.venv/bin/python scripts/evaluate_test.py --device cpu --benchmark
+.venv/bin/python scripts/build_results_report.py
+```
+
+Test mAP50:95 (mean +/- sample SD) is **0.1874 +/- 0.0037** for YOLO11n and
+**0.1902 +/- 0.0067** for YOLO11s. Macro-F1 is **0.4547 +/- 0.0238** and
+**0.4835 +/- 0.0218**, respectively. CPU median predict-call latency is 50.21/79.80 ms
+on the same M2 Max with four threads, distinct from Stage 4 GPU timings.
+See [protocol, outputs and reproduction](reports/results_checkpoint/README.md).

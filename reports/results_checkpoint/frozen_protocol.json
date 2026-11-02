@@ -1,0 +1,37 @@
+{
+  "frozen_utc": "2026-11-02T12:20:15.651959+00:00",
+  "protocol": {
+    "validation_summary_sha256": "bff3afdd9a188a7615bbe987f1525fa63a8c40077aafca69d33aa493d8679509",
+    "thresholds": {
+      "yolo11n": 0.2,
+      "yolo11s": 0.3
+    },
+    "checkpoint_sha256": {
+      "yolo11n_42": "32c43e95841dbfd0b8de4d2683f519379eaa578f886fe718e23d0abf70ac97f1",
+      "yolo11n_43": "1fc91fd4f32bf9d1ad81a263dbd254d2cb3e2dda9d162b34405278231e3feb53",
+      "yolo11n_44": "b072309f3a96790e5edebdcc3c0f5e7e5db516afbe116eb8caa666e8b9d00cbe",
+      "yolo11s_42": "439af500e9d71e875ef7fcafcd39345cd36a46d20c3c5d0804207b538a8412b1",
+      "yolo11s_43": "5dcf5fbaf3bd4bbbc7322f51ca382816c92b01ee5c82c6332ce6e68be18ed76f",
+      "yolo11s_44": "1e0d5814ba468e26541829d51c0ac06135b3cfb4126175a1cb2ae87f6696d068"
+    },
+    "settings": {
+      "imgsz": 640,
+      "conf": 0.001,
+      "iou": 0.7,
+      "agnostic_nms": false,
+      "max_det": 300,
+      "rect": false,
+      "quantize": 32
+    },
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "split": "test",
+    "matching_iou": 0.5,
+    "model_selection": "validation only; all three seeds reported; no test tuning",
+    "benchmark_seed": 42,
+    "benchmark_confidence": 0.25
+  }
+}

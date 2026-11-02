@@ -1,0 +1,188 @@
+[
+  {
+    "case": "small_miss",
+    "model": "yolo11n",
+    "seed": 42,
+    "image": "data/prepared/construction-ppe/images/test/test__image182.jpg",
+    "target_index": 6,
+    "source_image": "images/test/image182.jpg",
+    "source_line": 7,
+    "class_name": "helmet",
+    "target": [
+      460.17024,
+      109.32032,
+      484.11008000000004,
+      136.94016000000002,
+      0
+    ],
+    "area_640": 661.2145504256023,
+    "visibility": "uncertain",
+    "confidence": 0.2,
+    "matched": false,
+    "best_same_class_prediction": [
+      457.06884765625,
+      127.47470092773438,
+      523.2479248046875,
+      197.57907104492188,
+      0.8230093717575073,
+      0.0
+    ],
+    "best_iou": 0.04465886824120926,
+    "best_prediction_matched_elsewhere": true
+  },
+  {
+    "case": "small_miss",
+    "model": "yolo11s",
+    "seed": 42,
+    "image": "data/prepared/construction-ppe/images/test/test__image182.jpg",
+    "target_index": 6,
+    "source_image": "images/test/image182.jpg",
+    "source_line": 7,
+    "class_name": "helmet",
+    "target": [
+      460.17024,
+      109.32032,
+      484.11008000000004,
+      136.94016000000002,
+      0
+    ],
+    "area_640": 661.2145504256023,
+    "visibility": "uncertain",
+    "confidence": 0.3,
+    "matched": false,
+    "best_same_class_prediction": [
+      456.82843017578125,
+      127.86713409423828,
+      516.1598510742188,
+      193.58258056640625,
+      0.8576061725616455,
+      0.0
+    ],
+    "best_iou": 0.050013092266566056,
+    "best_prediction_matched_elsewhere": true
+  },
+  {
+    "case": "occluded_miss",
+    "model": "yolo11n",
+    "seed": 42,
+    "image": "data/prepared/construction-ppe/images/test/test__image1037.jpeg",
+    "target_index": 9,
+    "source_image": "images/test/image1037.jpeg",
+    "source_line": 10,
+    "class_name": "vest",
+    "target": [
+      404.5695999999999,
+      253.43999999999997,
+      462.60992,
+      333.91999999999996,
+      2
+    ],
+    "area_640": 4671.084953600005,
+    "visibility": "occluded",
+    "confidence": 0.2,
+    "matched": false,
+    "best_same_class_prediction": [
+      423.20245361328125,
+      190.03111267089844,
+      527.5282592773438,
+      339.7783203125,
+      0.7656261920928955,
+      2.0
+    ],
+    "best_iou": 0.18522952356284478,
+    "best_prediction_matched_elsewhere": true
+  },
+  {
+    "case": "occluded_miss",
+    "model": "yolo11s",
+    "seed": 42,
+    "image": "data/prepared/construction-ppe/images/test/test__image1037.jpeg",
+    "target_index": 9,
+    "source_image": "images/test/image1037.jpeg",
+    "source_line": 10,
+    "class_name": "vest",
+    "target": [
+      404.5695999999999,
+      253.43999999999997,
+      462.60992,
+      333.91999999999996,
+      2
+    ],
+    "area_640": 4671.084953600005,
+    "visibility": "occluded",
+    "confidence": 0.3,
+    "matched": false,
+    "best_same_class_prediction": [
+      425.16070556640625,
+      187.8055419921875,
+      528.7454833984375,
+      355.140869140625,
+      0.7320868372917175,
+      2.0
+    ],
+    "best_iou": 0.15870579940619317,
+    "best_prediction_matched_elsewhere": true
+  },
+  {
+    "case": "localization",
+    "model": "yolo11n",
+    "seed": 42,
+    "image": "data/prepared/construction-ppe/images/test/test__image1125.jpg",
+    "target_index": 9,
+    "source_image": "images/test/image1125.jpg",
+    "source_line": 10,
+    "class_name": "Person",
+    "target": [
+      678.0482559999999,
+      167.74558449999995,
+      900.544,
+      626.0518615,
+      6
+    ],
+    "area_640": 39832.49846913481,
+    "visibility": "not_reviewed",
+    "confidence": 0.2,
+    "matched": false,
+    "best_same_class_prediction": [
+      381.52099609375,
+      189.88961791992188,
+      921.4949340820312,
+      645.756591796875,
+      0.8368945121765137,
+      6.0
+    ],
+    "best_iou": 0.3865022753296327,
+    "best_prediction_matched_elsewhere": false
+  },
+  {
+    "case": "localization",
+    "model": "yolo11s",
+    "seed": 42,
+    "image": "data/prepared/construction-ppe/images/test/test__image1125.jpg",
+    "target_index": 9,
+    "source_image": "images/test/image1125.jpg",
+    "source_line": 10,
+    "class_name": "Person",
+    "target": [
+      678.0482559999999,
+      167.74558449999995,
+      900.544,
+      626.0518615,
+      6
+    ],
+    "area_640": 39832.49846913481,
+    "visibility": "not_reviewed",
+    "confidence": 0.3,
+    "matched": false,
+    "best_same_class_prediction": [
+      324.0178527832031,
+      139.41741943359375,
+      927.7024536132812,
+      651.5611572265625,
+      0.7977685928344727,
+      6.0
+    ],
+    "best_iou": 0.32981890760337346,
+    "best_prediction_matched_elsewhere": false
+  }
+]

@@ -1,0 +1,10 @@
+visibility,size,support
+clear,small,13
+clear,medium,175
+clear,large,71
+occluded,small,1
+occluded,medium,33
+occluded,large,38
+uncertain,small,49
+uncertain,medium,135
+uncertain,large,6

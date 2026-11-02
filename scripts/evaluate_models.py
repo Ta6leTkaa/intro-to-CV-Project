@@ -47,19 +47,21 @@ def mean_std(values):
                 std=statistics.stdev(values) if len(values) > 1 else None)
 
 
-def dataset():
+def dataset(split='val'):
+    if split not in {'val', 'test'}:
+        raise ValueError('Only frozen validation/test splits are supported')
     import yaml
     config = yaml.safe_load(DATA.read_text())
     names = config['names']
     names = [names[i] for i in range(len(names))] if isinstance(names, dict) else names
     base = Path(config['path'])
-    images = sorted((base / config['val']).glob('*'))
+    images = sorted((base / config[split]).glob('*'))
     records = []
     hasher = hashlib.sha256()
     for p in images:
         if not p.is_file() or p.suffix.lower() not in {'.jpg', '.jpeg', '.png', '.bmp', '.webp'}:
             continue
-        label = base / 'labels/val' / (p.stem + '.txt')
+        label = base / f'labels/{split}' / (p.stem + '.txt')
         with Image.open(p) as im:
             w, h = im.size
         targets = []
@@ -73,14 +75,17 @@ def dataset():
         hasher.update(p.read_bytes())
         hasher.update(label.read_bytes())
         records.append(dict(image=p.relative_to(ROOT).as_posix(), targets=targets))
-    if len(records) != 73:
-        raise ValueError(f'Expected the frozen 73-image validation split, got {len(records)}')
+    expected = {'val': 73, 'test': 78}[split]
+    if len(records) != expected:
+        raise ValueError(f'Expected the frozen {expected}-image {split} split, got {len(records)}')
     return names, records, hasher.hexdigest()
 
 
-def predict_checkpoint(checkpoint, model_name, seed, device, records, names, data_hash, versions, refresh):
+def predict_checkpoint(checkpoint, model_name, seed, device, records, names, data_hash, versions, refresh,
+                       split='val', output_dir=None):
     from ultralytics import YOLO
-    cache_path = OUT / 'cache' / f'{model_name}_seed{seed}_val.json'
+    output_dir = OUT if output_dir is None else Path(output_dir)
+    cache_path = output_dir / 'cache' / f'{model_name}_seed{seed}_{split}.json'
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     fingerprint = dict(checkpoint_sha256=digest(checkpoint), dataset_sha256=data_hash,
                        versions=versions, device=device, settings=SETTINGS,
@@ -108,8 +113,8 @@ def predict_checkpoint(checkpoint, model_name, seed, device, records, names, dat
                                 boxes.cls.cpu().numpy())).tolist()
         images.append(dict(**source, predictions=pred))
     # Re-evaluate AP in the same environment and at the same image geometry for both models.
-    metrics = model.val(data=str(DATA), split='val', device=device, batch=16,
-                        plots=False, verbose=False, project=str(OUT / 'cache'),
+    metrics = model.val(data=str(DATA), split=split, device=device, batch=16,
+                        plots=False, verbose=False, project=str(output_dir / 'cache'),
                         name=f'{model_name}_seed{seed}_ap', exist_ok=True, **SETTINGS)
     per_class = metrics.summary()
     if digest(checkpoint) != fingerprint['checkpoint_sha256']:

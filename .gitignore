@@ -13,3 +13,8 @@ Settings.json
 /yolo11s.pt
 reports/evaluation/cache/
 last.pt
+reports/results_checkpoint/cache/
+planning/latex/*.aux
+planning/latex/*.log
+planning/latex/*.out
+planning/latex/*.synctex.gz
