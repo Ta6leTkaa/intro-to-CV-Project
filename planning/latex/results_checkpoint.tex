@@ -72,7 +72,6 @@ The report uses the retained reproduction checkpoints. The lost Stage 3 T4 exper
 .venv/bin/python scripts/evaluate_test.py --device cpu --benchmark
 .venv/bin/python scripts/build_results_report.py
 \end{verbatim}
-In \texttt{planning/latex}, compile \texttt{results\_checkpoint.tex} with Tectonic or run pdfLaTeX twice. Preparation and output details are documented in the Results checkpoint README. Checkpoint, test-content, annotation and validation-summary SHA-256 values are retained in JSON provenance records. Caches require matching content and environment fingerprints.
 
 {\raggedright\textbf{Evidence:} the test summary, per-seed/per-class/subgroup CSVs and \texttt{failure\_examples.json} in \texttt{reports/results\_checkpoint}; Stage 4 validation summary; retained training logs; dataset split manifest and visibility review. Source attribution and archive checksum are in \texttt{data/ATTRIBUTION.md} and \texttt{data/source.json}. Repository: \url{https://github.com/Ta6leTkaa/intro-to-CV-Project}.\par}
 \end{document}
