@@ -14,7 +14,10 @@ Settings.json
 reports/evaluation/cache/
 last.pt
 reports/results_checkpoint/cache/
-planning/latex/*.aux
-planning/latex/*.log
-planning/latex/*.out
-planning/latex/*.synctex.gz
+
+# Regenerated previews and local development outputs
+reports/training/**/train_batch*.jpg
+reports/training/**/val_batch*.jpg
+runs/
+.ipynb_checkpoints/
+.pytest_cache/

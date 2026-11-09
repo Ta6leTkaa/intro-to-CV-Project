@@ -19,6 +19,7 @@ os.environ.setdefault('XDG_CACHE_HOME', '/tmp/cv-project-cache')
 import numpy as np
 from PIL import Image
 
+from benchmark_history import benchmark_context, retain_benchmark
 from detection_metrics import evaluate_threshold
 from mps_compat import configure_mps_nms, configure_mps_validation
 from train_yolo11n import DATA, ROOT, hardware_name, pick_device
@@ -172,6 +173,10 @@ def main():
     parser.add_argument('--repeats', type=int, default=100)
     args = parser.parse_args()
     seeds = [int(s) for s in args.seeds.split(',')]
+    if not seeds or len(set(seeds)) != len(seeds) or len(set(args.models)) != len(args.models):
+        parser.error('Use unique models and seeds.')
+    if args.warmup < 0 or args.repeats < 1:
+        parser.error('Warm-up must be nonnegative and repeats must be positive.')
     # Fail before inference if any requested trained checkpoint is missing.
     checkpoints = {(name, seed): ROOT / f'reports/training/{name}_seed{seed}/weights/best.pt'
                    for name in args.models for seed in seeds}
@@ -250,12 +255,17 @@ def main():
     write_csv(OUT / 'per_class_thresholds.csv', per_class_rows)
     write_csv(OUT / 'per_class_ap.csv', ap_rows)
     write_csv(OUT / 'model_comparison.csv', comparison)
-    latencies = {}
+    benchmark_hashes = {name: digest(checkpoints[name, seeds[0]]) for name in args.models}
+    latencies, latency_context = retain_benchmark(OUT / 'validation_summary.json', data_hash,
+                                                  benchmark_hashes, 'val')
     if args.benchmark:
+        latencies = {}
         # Fixed seed and fixed confidence isolate model latency from seed/threshold selection.
         for name in args.models:
             latencies[name] = benchmark(checkpoints[name, seeds[0]], records, device, 0.25,
                                         args.warmup, args.repeats)
+        latency_context = benchmark_context(data_hash, benchmark_hashes, 'val', versions, device,
+                                            datetime.now(timezone.utc).isoformat())
     summary = dict(generated_utc=datetime.now(timezone.utc).isoformat(timespec='seconds'),
                    split='val', images=len(records), dataset_sha256=data_hash, versions=versions,
                    device=device, prediction_settings=SETTINGS, matching_iou=0.5,
@@ -267,7 +277,7 @@ def main():
                    macro_average='class F1/precision/recall averaged over classes with validation ground truth',
                    selection='one threshold per model maximizing mean validation macro-F1 across seeds; lower threshold wins ties',
                    selected_thresholds=selected, test_used=False, runs=runs,
-                   comparison=comparison, latency=latencies)
+                   comparison=comparison, latency=latencies, latency_context=latency_context)
     (OUT / 'validation_summary.json').write_text(json.dumps(summary, indent=2, default=float) + '\n')
     import matplotlib
     matplotlib.use('Agg')

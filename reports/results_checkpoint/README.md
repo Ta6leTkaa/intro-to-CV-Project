@@ -11,24 +11,22 @@ and activate the pinned project environment. From the repository root:
 
 ```sh
 .venv/bin/python scripts/evaluate_test.py --device cpu --benchmark
-.venv/bin/python scripts/build_results_report.py
-cd planning/latex
-tectonic --outdir .. results_checkpoint.tex
-# Or: pdflatex results_checkpoint.tex (twice)
+.venv/bin/python scripts/build_results_figures.py
 ```
 
-The submitted PDF is `planning/Intro_to_CV_Results_Checkpoint.pdf`; the editable entry point
-is `planning/latex/results_checkpoint.tex`. Generated tables share its directory. Figure
-paths are relative to that directory. `planning/results_checkpoint_latex.zip` contains
-self-contained LaTeX sources and figures (compile its root results_checkpoint.tex).
-The report is in English to match the four previous submissions.
+The submitted PDF is `planning/Intro_to_CV_Results_Checkpoint.pdf`. Reports are
+retained only as PDFs. The figure script rebuilds plots from committed CSV/JSON results
+and annotated failures from `failure_examples.json` plus the prepared images. It does
+not require prediction caches, LaTeX, report templates or latency measurements.
 
 The evaluator checks every checkpoint against Stage 4 SHA-256 and verifies all 50 epoch
 rows. It writes `frozen_protocol.json` before loading test images. A later invocation
 refuses changes to this frozen protocol. Prediction caches are ignored by Git and
 fingerprinted by checkpoint, test bytes, versions, thread count, device and settings;
 use `--refresh` to recompute. The optional benchmark is required to regenerate runtime
-results; omitting it only evaluates detection metrics. Re-running can change timing.
+results; omitting it evaluates detection metrics and retains compatible saved timings
+with their original environment/date in `latency_context`. Incompatible checkpoint or
+dataset timings are not reused. Re-running the benchmark can change timing.
 
 ## Outputs and definitions
 

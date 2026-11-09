@@ -94,6 +94,18 @@ def collect_metrics(metrics):
     }
 
 
+def validate_training_destination(project, model_path, seeds, resume=False):
+    """Reject reuse before any run writes weights, logs or failure reports."""
+    stem = Path(model_path).stem
+    if not resume and (project / f'{stem}_summary.json').exists():
+        raise FileExistsError(f'Existing training summary in {project}; use a new --project directory.')
+    for seed in seeds:
+        run_dir = project / f'{stem}_seed{seed}'
+        if not resume and run_dir.exists() and any(run_dir.iterdir()):
+            raise FileExistsError(f'Existing run: {run_dir}. Use a new --project directory, '
+                                  'or --resume for an unfinished checkpoint.')
+
+
 def _run_seed(seed, epochs, batch, device, project, model_path, resume=False):
     from ultralytics import YOLO
     postprocess_backend = configure_mps_nms(device)
@@ -167,6 +179,7 @@ def _run_seed(seed, epochs, batch, device, project, model_path, resume=False):
 
 
 def run_seed(seed, epochs, batch, device, project, model_path, resume=False):
+    validate_training_destination(project, model_path, [seed], resume)
     try:
         return _run_seed(seed, epochs, batch, device, project, model_path, resume)
     except BaseException:
@@ -214,6 +227,13 @@ def main(default_model='yolo11n.pt'):
     seeds = [int(s) for s in args.seeds.split(',') if s.strip()]
     if not seeds or len(set(seeds)) != len(seeds) or args.jobs < 1:
         parser.error('Use unique seeds and a positive number of jobs.')
+    if args.epochs < 1 or args.batch < 1:
+        parser.error('Epochs and batch size must be positive.')
+    # Preflight all destinations so a collision on a later seed cannot leave a partial run.
+    try:
+        validate_training_destination(project, args.model, seeds, args.resume)
+    except FileExistsError as exc:
+        parser.error(str(exc))
     runs = []
     jobs = min(args.jobs, len(seeds))
     if jobs == 1:

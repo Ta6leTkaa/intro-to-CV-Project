@@ -59,5 +59,6 @@ jupyter nbconvert --to notebook --execute --inplace notebooks/002__yolo11s_compa
   are opt-in, while saved tables and plots can be inspected without retraining.
 - Comparison, per-class AP/threshold metrics, confidence sweep and latency:
   `reports/evaluation/validation_summary.json` and adjacent CSV/PNG files.
-- Next: use the selected thresholds for held-out test evaluation, then coordinate
-  size/occlusion analysis and actual failure examples with Member 4.
+- Subsequent Results checkpoint: held-out test evaluation, size/visibility analysis and
+  annotated failures are complete in `reports/results_checkpoint/`; submitted reports
+  and the final technical summary are retained as PDFs in `planning/`.

@@ -40,9 +40,13 @@ cosine decay, flips plus mild scale/translate/colour only) is fixed in `scripts/
 ```sh
 source .venv/bin/activate
 python scripts/train_yolo11n.py               # seeds 42 43 44, device auto (cuda > mps > cpu)
-python scripts/train_yolo11n.py --epochs 2    # smoke run to validate the setup first
-python scripts/train_yolo11n.py --batch 8     # fallback if memory is insufficient
+python scripts/train_yolo11n.py --seeds 42 --epochs 2 --project reports/training/smoke
+python scripts/train_yolo11n.py --batch 8 --project reports/training/batch8
 ```
+
+Existing nonempty run folders and saved summaries are protected from accidental overwrite.
+Use a fresh `--project` directory for a new experiment; `--resume` is for unfinished runs.
+A repeated smoke run also needs a fresh directory. Both notebooks keep training opt-in.
 
 Artifacts per seed land in `reports/training/yolo11n_seed{seed}/` (weights/best.pt selected
 by validation mAP50:95, results.csv, curves), and mean/std across seeds with versions,
@@ -112,16 +116,14 @@ per-class CSV tables, and `confidence_sweep.png`. Prediction caches are fingerpr
 ignored by Git.
 See [evaluation protocol](reports/evaluation/README.md) and [Member 3 handoff](planning/member_3.md).
 
-For final evaluation, freeze validation-selected settings before using test data. Size and
-occlusion analysis, at least three explained failure cases, and the final report/demo remain
-for the Results checkpoint and final submission.
+The Results checkpoint below completes test evaluation, size/visibility analysis and
+three representative failure cases using the validation-selected settings.
 
 ## Results checkpoint (Stage 5)
 
 The completed held-out evaluation and failure analysis are in
-[the Results checkpoint report](planning/Intro_to_CV_Results_Checkpoint.pdf), with
-[editable LaTeX](planning/latex/results_checkpoint.tex) and a
-[self-contained source archive](planning/results_checkpoint_latex.zip).
+[the Results checkpoint report](planning/Intro_to_CV_Results_Checkpoint.pdf).
+Reports are retained as final PDFs; document source files and compilation tooling are omitted.
 The English report follows the previous submissions. It evaluates all six retained
 checkpoints on 78 test images without changing the Stage 4 thresholds (0.20/0.30), and
 includes per-class and size/visibility results, controlled CPU latency, training-time
@@ -129,7 +131,7 @@ provenance, and three actual annotated failures.
 
 ```sh
 .venv/bin/python scripts/evaluate_test.py --device cpu --benchmark
-.venv/bin/python scripts/build_results_report.py
+.venv/bin/python scripts/build_results_figures.py
 ```
 
 Test mAP50:95 (mean +/- sample SD) is **0.1874 +/- 0.0037** for YOLO11n and
@@ -137,3 +139,29 @@ Test mAP50:95 (mean +/- sample SD) is **0.1874 +/- 0.0037** for YOLO11n and
 **0.4835 +/- 0.0218**, respectively. CPU median predict-call latency is 50.21/79.80 ms
 on the same M2 Max with four threads, distinct from Stage 4 GPU timings.
 See [protocol, outputs and reproduction](reports/results_checkpoint/README.md).
+
+## Final technical summary
+
+The two-page [final technical summary](planning/Intro_to_CV_Final_Technical_Summary.pdf)
+summarizes the problem, dataset, methodology, experimental setup, final test results,
+limitations and team roles.
+
+## Verification and repository layout
+
+```sh
+python -m unittest discover -s tests -v
+python -m pip check
+```
+
+- `scripts/`: dataset preparation, training, evaluation and figure generation.
+- `notebooks/`: inspection of saved experiments; training is opt-in.
+- `planning/`: submitted PDF reports and member responsibility notes.
+- `reports/`: audited dataset metadata, training logs/checkpoints and evaluation evidence.
+- `data/`: source attribution/configuration; downloaded and prepared images are ignored.
+
+CSV/JSON results, six `best.pt` checkpoints, learning curves, confusion matrices and report
+figures are retained. Regenerable training/validation batch previews, prediction caches,
+local run outputs and the virtual environment are excluded. GitHub Actions runs the unit
+tests on CPU; MPS-specific checks skip when MPS is unavailable. Evaluation without
+`--benchmark` retains compatible saved latency and its original environment in
+`latency_context`; use `--benchmark` to measure the current environment.

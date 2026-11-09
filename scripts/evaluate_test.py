@@ -11,6 +11,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
+from benchmark_history import benchmark_context, retain_benchmark
 from detection_metrics import evaluate_threshold, match_detections
 from evaluate_models import (ROOT, SETTINGS, benchmark, dataset, digest, mean_std,
                              predict_checkpoint, write_csv)
@@ -24,9 +25,10 @@ SEEDS = [42, 43, 44]
 
 def annotations(records, names):
     """Join original line-number visibility tags to prepared object order; verify class/box."""
-    manifest = list(csv.DictReader((ROOT / 'reports/dataset/split_manifest.csv').open()))
-    tags = {(r['image'], int(r['line'])): r for r in csv.DictReader(
-        (ROOT / 'reports/dataset/occlusion_review.csv').open())}
+    with (ROOT / 'reports/dataset/split_manifest.csv').open() as stream:
+        manifest = list(csv.DictReader(stream))
+    with (ROOT / 'reports/dataset/occlusion_review.csv').open() as stream:
+        tags = {(r['image'], int(r['line'])): r for r in csv.DictReader(stream)}
     lookup = {f"{r['original_split']}__{Path(r['image']).name}": r
               for r in manifest if r['split'] == 'test'}
     objects = []
@@ -58,7 +60,8 @@ def annotations(records, names):
                                 area_640=area, size='small' if area < 32**2 else 'medium' if area < 96**2 else 'large',
                                 visibility=tag['final_tag'] if tag else 'not_reviewed',
                                 truncated=tag['truncated'] if tag else 'not_reviewed'))
-    assert Counter(o['visibility'] for o in objects if o['class_id'] < 5) == dict(clear=259, occluded=72, uncertain=190)
+    if Counter(o['visibility'] for o in objects if o['class_id'] < 5) != dict(clear=259, occluded=72, uncertain=190):
+        raise ValueError('Visibility review differs from the frozen 521-object review.')
     return objects
 
 
@@ -89,6 +92,8 @@ def main():
     parser.add_argument('--benchmark', action='store_true')
     parser.add_argument('--threads', type=int, default=4)
     args = parser.parse_args()
+    if args.threads < 1:
+        parser.error('--threads must be positive')
     import torch
     import ultralytics
     from ultralytics.utils.torch_utils import get_cpu_info
@@ -97,16 +102,21 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     val_path = ROOT / 'reports/evaluation/validation_summary.json'
     val = json.loads(val_path.read_text())
-    assert val['split'] == 'val' and val['test_used'] is False
+    if val['split'] != 'val' or val['test_used'] is not False:
+        raise ValueError('Threshold selection must use validation only.')
     thresholds = val['selected_thresholds']
-    assert thresholds == {'yolo11n': 0.2, 'yolo11s': 0.3}
+    if thresholds != {'yolo11n': 0.2, 'yolo11s': 0.3}:
+        raise ValueError('Thresholds differ from the frozen Stage 4 selection.')
     checkpoints = {(m,s): ROOT / f'reports/training/{m}_seed{s}/weights/best.pt' for m in MODELS for s in SEEDS}
     val_hashes = {(r['model'], r['seed']): r['checkpoint_sha256'] for r in val['runs']}
     for key, checkpoint in checkpoints.items():
         if digest(checkpoint) != val_hashes[key]:
             raise ValueError(f'Checkpoint differs from Stage 4: {key}')
         log = checkpoint.parents[1] / 'results.csv'
-        assert [int(r['epoch']) for r in csv.DictReader(log.open())] == list(range(1,51))
+        with log.open() as stream:
+            epochs = [int(r['epoch']) for r in csv.DictReader(stream)]
+        if epochs != list(range(1,51)):
+            raise ValueError(f'Incomplete or duplicated epoch log: {log}')
     # Persist the selection protocol before reading test images or making predictions.
     protocol = dict(validation_summary_sha256=digest(val_path), thresholds=thresholds,
                     checkpoint_sha256={f'{m}_{s}': val_hashes[m,s] for m,s in checkpoints},
@@ -157,10 +167,15 @@ def main():
         for metric in ['map50_95','map50','macro_precision','macro_recall','macro_f1','macro_f1_ref025']:
             row.update({metric+'_'+k:v for k,v in mean_std([r[metric] for r in rr]).items()})
         comparison.append(row)
-    latency = {}
+    benchmark_hashes = {model: val_hashes[model, 42] for model in MODELS}
+    latency, latency_context = retain_benchmark(OUT / 'test_summary.json', data_hash,
+                                                benchmark_hashes, 'test')
     if args.benchmark:
+        latency = {}
         for model in MODELS:
             latency[model] = benchmark(checkpoints[model,42], records, device, 0.25, 20, 100)
+        latency_context = benchmark_context(data_hash, benchmark_hashes, 'test', versions, device,
+                                            datetime.now(timezone.utc).isoformat())
     for name, rows in [('per_seed',runs),('model_comparison',comparison),('per_class',classes),
                        ('subgroup_recall',subgroups),('complexity',complexity)]:
         write_csv(OUT / (name+'.csv'), rows)
@@ -170,7 +185,8 @@ def main():
                   device=device, cpu_identification=get_cpu_info(),
                   postprocess_backend=postprocess, validation_backend=validation_backend,
                   protocol=protocol, ap_multilabel=True, threshold_prediction_multilabel=False,
-                  runs=runs, comparison=comparison, latency=latency, complexity=complexity,
+                  runs=runs, comparison=comparison, latency=latency, latency_context=latency_context,
+                  complexity=complexity,
                   annotation_hashes={n:digest(ROOT / 'reports/dataset' / n) for n in ['split_manifest.csv','occlusion_review.csv']})
     (OUT/'test_summary.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(dict(comparison=comparison,latency=latency),indent=2))
