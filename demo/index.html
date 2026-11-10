@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PPE Detection</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <a class="brand" href="/">PPE Detection</a>
+      <nav aria-label="Views">
+        <button class="nav active" data-tab="demo" aria-pressed="true">Demo</button>
+        <button class="nav" data-tab="report" aria-pressed="false">Results</button>
+      </nav>
+      <span class="runtime" id="runtime" role="status">Connecting…</span>
+    </header>
+
+    <section id="demo-view">
+      <div class="heading"><h1>Detect protective equipment</h1></div>
+      <div class="workspace">
+        <section class="panel controls" aria-label="Detection settings">
+          <label class="upload" id="dropzone" tabindex="0" role="button" aria-label="Upload image">
+            <input id="file" type="file" accept="image/jpeg,image/png,image/webp">
+            <span class="upload-icon" aria-hidden="true">＋</span>
+            <strong>Upload image</strong>
+            <small>Drop a file or click · up to 15 MB</small>
+          </label>
+          <p id="filename" class="filename">No image selected</p>
+          <label class="field-label" for="examples">Or choose an example</label>
+          <select id="examples"><option value="">Loading…</option></select>
+          <p class="hint" id="dataset-note" hidden></p>
+          <div class="divider"></div>
+          <label class="field-label">Model</label>
+          <div class="model-options" role="group" aria-label="Model">
+            <button data-model="both" class="selected" aria-pressed="true">Both</button>
+            <button data-model="yolo11n" aria-pressed="false">YOLO11n</button>
+            <button data-model="yolo11s" aria-pressed="false">YOLO11s</button>
+          </div>
+          <details class="advanced">
+            <summary>Confidence</summary>
+            <div class="range-row"><label for="conf-n">YOLO11n</label><output id="value-n">0.20</output></div>
+            <input type="range" id="conf-n" min="0.01" max="0.95" step="0.01" value="0.20">
+            <div class="range-row"><label for="conf-s">YOLO11s</label><output id="value-s">0.30</output></div>
+            <input type="range" id="conf-s" min="0.01" max="0.95" step="0.01" value="0.30">
+            <button class="text-button" id="reset">Reset defaults</button>
+          </details>
+          <button class="run" id="run" disabled>Run detection</button>
+          <p id="message" class="message" role="status" aria-live="polite"></p>
+        </section>
+        <section class="panel viewer" aria-label="Predictions">
+          <div class="panel-title"><span>Preview</span><label class="toggle"><input id="show-boxes" type="checkbox" checked> Boxes</label></div>
+          <div id="empty" class="empty"><span aria-hidden="true">＋</span><p>Select an image to get started</p></div>
+          <div id="results" class="results" hidden></div>
+          <div class="viewer-footer"><span id="image-size"></span></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="report-view" hidden>
+      <div class="heading"><h1>Test results</h1><p>78 images · average of 3 seeds</p></div>
+      <div id="metrics" class="metrics"></div>
+      <div class="report-grid">
+        <figure class="panel"><figcaption>AP50 by class</figcaption><img src="/figures/class_ap50_comparison.png" alt="AP50 by class for both models" loading="lazy"></figure>
+        <figure class="panel"><figcaption>Recall by object size</figcaption><img src="/figures/size_recall_comparison.png" alt="Recall for small, medium and large objects" loading="lazy"></figure>
+      </div>
+      <details class="failures"><summary>Failure examples</summary><p class="hint">Saved examples · yellow: ground truth · cyan: prediction</p>
+        <div class="failure-grid">
+          <figure class="panel"><figcaption>Small helmet</figcaption><img src="/figures/small_miss.png" alt="Missed small helmet" loading="lazy"></figure>
+          <figure class="panel"><figcaption>Occluded vest</figcaption><img src="/figures/occluded_miss.png" alt="Missed occluded vest" loading="lazy"></figure>
+          <figure class="panel"><figcaption>Localization</figcaption><img src="/figures/localization.png" alt="Inaccurate person localization" loading="lazy"></figure>
+        </div>
+      </details>
+    </section>
+  </main>
+  <script src="/app.js" defer></script>
+</body>
+</html>
