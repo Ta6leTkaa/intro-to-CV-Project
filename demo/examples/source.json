@@ -1,0 +1,31 @@
+{
+  "source_url": "https://github.com/ultralytics/assets/releases/download/v0.0.0/construction-ppe.zip",
+  "archive_sha256": "e5817aa9c73f33e525d76ca6bc6af4e4eac9dcea9bcfef1cfd1a71c09fbc1232",
+  "retrieved": "2026-11-10",
+  "source": "Ultralytics Construction-PPE (November 2026 revision)",
+  "processing": "EXIF transpose; RGB; aspect-preserving thumbnail to 1600 px; JPEG quality 92",
+  "purpose": "Live inference examples only. Not the frozen 78-image test split. No labels are imported.",
+  "images": [
+    {
+      "file": "clear_ppe.jpg",
+      "title": "Clear PPE",
+      "archive_member": "construction-ppe/images/val/source-17e8cd16e406c9f394f05f7ec1b33947.jpg",
+      "original_sha256": "11b20875ee5f26201507fa3c5e3408aba19371b4a9515852c7390f9129492f7c",
+      "demo_sha256": "92bd0359ab6d6bcadf12cc4037f8a91262958e0e116b83f0205c64d6ed8735b9"
+    },
+    {
+      "file": "multiple_workers.jpg",
+      "title": "Multiple workers",
+      "archive_member": "construction-ppe/images/val/source-1bf1b490d2ff04f9db9bb55f74db9bd5.jpg",
+      "original_sha256": "577a802a2af960563a742ef7fbbb497e3b62b24f2609fecb13f0f4118af6d349",
+      "demo_sha256": "c0fa487875e40c5b87a1b5e7672d59960269d6331d227c61c6e21cc9a820433e"
+    },
+    {
+      "file": "distant_workers.jpg",
+      "title": "Distant workers",
+      "archive_member": "construction-ppe/images/val/source-241f49c7c7ae0145e383951c72962fb9.jpg",
+      "original_sha256": "c4ea2c525c7e9f95cba0dbb6bed81e323a389c655bd7315973e78c88fa9e8c34",
+      "demo_sha256": "5e55da1f641904ba81689f51050233b327846d8b79667bdb094cae0520116d22"
+    }
+  ]
+}

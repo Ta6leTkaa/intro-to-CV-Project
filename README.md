@@ -1,5 +1,12 @@
 # PPE Safety Equipment Detection — P14
 
+## Interactive demo
+
+Run `python demo/server.py` and open http://127.0.0.1:8000 to upload images,
+compare YOLO11n/YOLO11s detections, adjust confidence, export annotated PNGs,
+and inspect saved test results. Install `demo/requirements.txt` for inference;
+the saved-results view works without them. See [demo setup and presentation](demo/README.md).
+
 Team plan: [planning/Intro_to_CV_project_plan.pdf](planning/Intro_to_CV_project_plan.pdf).
 First working model report: [planning/Intro_to_CV_project_first_working_model.pdf](planning/Intro_to_CV_project_first_working_model.pdf).
 Second approach report: [planning/intro_to_cv_3.pdf](planning/intro_to_cv_3.pdf).
