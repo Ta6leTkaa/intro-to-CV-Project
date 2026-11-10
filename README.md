@@ -142,9 +142,10 @@ See [protocol, outputs and reproduction](reports/results_checkpoint/README.md).
 
 ## Final technical summary
 
-The two-page [final technical summary](planning/Intro_to_CV_Final_Technical_Summary.pdf)
+The [final technical summary](planning/Intro_to_CV_Final_Technical_Summary.pdf)
 summarizes the problem, dataset, methodology, experimental setup, final test results,
-limitations and team roles.
+limitations and team roles. Annotated comparisons of the three failure cases for both models follow their
+discussion, before the conclusions.
 
 ## Verification and repository layout
 
